@@ -3,5 +3,7 @@
     "parserOptions": {
       "project": "./tsconfig.json"
     },
-    "@typescript-eslint/strict-boolean-expressions": "warn"
+    "rules": {
+      "@typescript-eslint/strict-boolean-expressions": "off"
+    }
 }
