@@ -1,3 +1,4 @@
+import { type Encrypter } from '../../protocols/encrypter'
 import { DbAddAccount } from './db-add-account'
 
 interface SutTypes {
@@ -5,14 +6,17 @@ interface SutTypes {
   encrypterStub: any
 }
 
-const makeSut = (): SutTypes => {
-  class EncrypterStub {
+const makeEncrypter = (): Encrypter => {
+  class EncrypterStub implements Encrypter {
     async encrypt (value: string): Promise<string> {
       return await new Promise(resolve => { resolve('hashed_password') })
     }
   }
+  return new EncrypterStub()
+}
 
-  const encrypterStub = new EncrypterStub()
+const makeSut = (): SutTypes => {
+  const encrypterStub = makeEncrypter()
   const sut = new DbAddAccount(encrypterStub)
 
   return {
