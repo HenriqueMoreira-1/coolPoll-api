@@ -1,14 +1,15 @@
-import { MongoClient } from 'mongodb'
+import { MongoHelper } from '../helpers/mongo-helper'
+import { AccountMongoRepository } from './account'
 
 describe('MongoDB: Account Repository', () => {
   beforeAll(async () => {
-    await MongoClient.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    await MongoHelper.connect(process.env.MONGO_URL!)
   })
 
-  afterAll(async () => {})
+  afterAll(async () => {
+    await MongoHelper.disconnect()
+  })
 
   test('Should return an account on success', async () => {
     const sut = new AccountMongoRepository()
